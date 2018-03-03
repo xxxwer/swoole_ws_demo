@@ -15,8 +15,10 @@ class WS extends RouteList
             t为2时，用正则执行匹配
         */
 
-        // swagger api json
-        $this->route[] = ['t' => 1, 'url' => 'ws_test1', 'class' => 'App\Controller\WS\T1', 'method' => 'test'];
+        $this->route[] = ['t' => 1, 'url' => 'init', 'class' => 'App\Controller\WS\OpenSocket', 'method' => 'init'];
+        $this->route[] = ['t' => 1, 'url' => 'open_socket', 'class' => 'App\Controller\WS\OpenSocket', 'method' => 'add'];
+        $this->route[] = ['t' => 1, 'url' => 'close_socket', 'class' => 'App\Controller\WS\OpenSocket', 'method' => 'del'];
+        $this->route[] = ['t' => 1, 'url' => 'send_msg', 'class' => 'App\Controller\WS\Msg', 'method' => 'sendMsg'];
     }
 
     protected function setRouteGroup()

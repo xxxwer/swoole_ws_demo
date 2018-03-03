@@ -17,6 +17,7 @@
     function init() {
         var output = document.getElementById("output");
         var sendMsg = document.getElementById("send-text");
+        var sendTo = document.getElementById("send-to");
         var sendBtn = document.getElementById("send-btn");
 
         var myws = new myWS(output);
@@ -24,8 +25,10 @@
 
         var doSendMsg = function(){
             var msg = {};
-            msg.route = 'ws_test1';
+            msg.route = 'send_msg';
             msg.data = sendMsg.value;
+            msg.to = sendTo.value;
+
             myws.doSend(JSON.stringify(msg));
         }
 
@@ -48,7 +51,9 @@
     myWS.prototype.onOpen = function(evt) {
         this.debug(evt);
         this.writeToScreen("CONNECTED");
-        this.doSend("WebSocket rocks");
+        var msg = {};
+        msg.route = 'init';
+        this.doSend(JSON.stringify(msg));
     }
     myWS.prototype.onClose = function(evt) {
         this.debug(evt);
@@ -93,11 +98,10 @@
 
     window.addEventListener("load", init, false);
 
-
-    console.log(JSON.parse('<?php echo json_encode($data["request"]); ?>'));
 </script>
 <h2><?php echo $data['d']; ?></h2>
 <div id="output"></div>
+<input type="text" id="send-to">
 <input type="text" id="send-text">
 <button id="send-btn">发送</button>
 </html>
